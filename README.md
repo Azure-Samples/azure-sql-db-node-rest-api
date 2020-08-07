@@ -38,7 +38,7 @@ In order to run this sample, the WideWorldImporters database is needed. Install 
 
 ## Add Database Objects
 
-Once the sample database has been installed, you need to add some stored procedure that will called from Python. The SQL code is available here:
+Once the sample database has been installed, you need to add some stored procedure that will be called from Javascript. The SQL code is available here:
 
 `./sql/WideWorldImportersUpdates.sql`
 
