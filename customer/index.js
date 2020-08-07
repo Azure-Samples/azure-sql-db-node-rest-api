@@ -26,7 +26,7 @@ const executeSQL = (context, verb, entity, payload) => {
     // Create the command to be executed
     const request = new Request(`web.${verb}_${entity}`, (err) => {
         if (err) {
-            context.log.error(err);
+            context.log.error(err);            
             context.res.status = 500;
             context.res.body = "Error executing T-SQL command";
         } else {
@@ -36,7 +36,8 @@ const executeSQL = (context, verb, entity, payload) => {
         }
         context.done();
     });    
-    request.addParameter('Json', TYPES.NVarChar, paramPayload, Infinity);
+    if (payload)
+        request.addParameter('Json', TYPES.NVarChar, paramPayload, Infinity);
 
     // Handle 'connect' event
     connection.on('connect', err => {
@@ -74,19 +75,26 @@ module.exports = function (context, req) {
             if (req.params.id) {
                 entity = "customer"
                 payload = { "CustomerID": req.params.id };            
+            } else {
+                entity = "customers"                
             }
             break;
-        case "post":
-            payload = req.body;            
+        case "patch":
+            entity = "customer"
+            payload = req.body;  
+            if (req.params.id) 
+                payload.CustomerID = req.params.id;
             break;
         case "put":
-            payload =  { 
-                "id": req.params.id,
-                "todo": req.body
-            };   
+            entity = "customer"
+            payload = req.body;              
             break;
         case "delete":
-            payload = { "id": req.params.id };
+            entity = "customer"
+            if (req.params.id) {
+                entity = "customer"
+                payload = { "CustomerID": req.params.id };            
+            }
             break;       
     }
 

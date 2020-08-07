@@ -7,7 +7,9 @@
       "name": "req",
       "methods": [
         "get",
-        "post"
+        "put",
+        "patch",
+        "delete"
       ],
       "route": "customer/{id:int?}"
     },
