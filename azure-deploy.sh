@@ -3,17 +3,23 @@
 set -euo pipefail
 
 # Make sure these values are correct for your environment
-resourceGroup="dm-api-03"
-appName="dm-api-03"
+resourceGroup="dm-api-04"
+appName="dm-api-04"
+storageName="dmapi04"
 location="WestUS2" 
 
 # Change this if you are using your own github repository
 gitSource="https://github.com/Azure-Samples/azure-sql-db-node-rest-api.git"
 
 # Make sure variables are sent in local.settings.json
-if [[ -z "${SQLAZURECONNSTR_WWIF:-}" ]]; then
-	echo "Plase export Azure SQL connection string:";
-    echo "export SQLAZURECONNSTR_WWIF=\"your-connection-string-here\"";
+if [[ -z "${db_server:-}" ]]; then
+	echo "Please export Azure SQL server to use:";
+    echo "export db_server=\"your-database-name-here\".database.windows.net";
+	exit 1;
+fi
+if [[ -z "${db_database:-}" ]]; then
+	echo "Please export Azure SQL database to use:";
+    echo "export db_database=\"your-database-name-here\"";
 	exit 1;
 fi
 
@@ -21,13 +27,6 @@ echo "Creating Resource Group...";
 az group create \
     -n $resourceGroup \
     -l $location
-
-echo "Creating Application Service Plan...";
-az appservice plan create \
-    -g $resourceGroup \
-    -n "linux-plan" \
-    --sku B1 \
-    --is-linux
 
 echo "Creating Application Insight..."
 az resource create \
@@ -39,26 +38,47 @@ az resource create \
 echo "Reading Application Insight Key..."
 aikey=`az resource show -g $resourceGroup -n $appName-ai --resource-type "Microsoft.Insights/components" --query properties.InstrumentationKey -o tsv`
 
-echo "Creating Web Application...";
-az webapp create \
+echo "Creating Storage Account...";
+az storage account create \
+    -g $resourceGroup \
+    -l $location \
+    -n $storageName \
+    --sku Standard_LRS
+
+echo "Creating Function App...";
+az functionapp create \
     -g $resourceGroup \
     -n $appName \
-    --plan "linux-plan" \
-    --runtime "PYTHON|3.7" \
+    --storage-account $storageName \
+    --app-insights-key $aikey \
+    --consumption-plan-location $location \
     --deployment-source-url $gitSource \
-    --deployment-source-branch master
+    --deployment-source-branch main \
+    --functions-version 2 \
+    --os-type Windows \
+    --runtime node \
+    --runtime-version 10 \
+
 
 echo "Configuring Connection String...";
-az webapp config connection-string set \
+az functionapp config appsettings set \
     -g $resourceGroup \
     -n $appName \
-    --settings WWIF="$SQLAZURECONNSTR_WWIF" \
-    --connection-string-type=SQLAzure
+    --settings "db_server=$db_server"
+    
+az functionapp config appsettings set \
+    -g $resourceGroup \
+    -n $appName \
+    --settings "db_database=$db_database"
 
-echo "Configuring Application Insights...";
-az webapp config appsettings set \
+az functionapp config appsettings set \
     -g $resourceGroup \
     -n $appName \
-    --settings APPINSIGHTS_KEY="$aikey"
+    --settings 'db_user=NodeFuncApp'     
+
+az functionapp config appsettings set \
+    -g $resourceGroup \
+    -n $appName \
+    --settings 'db_password=aN0ThErREALLY#$%TRONGpa44w0rd!'     
 
 echo "Done."
