@@ -179,9 +179,10 @@ GO
 CREATE OR ALTER PROCEDURE web.get_customers
 AS
 SET NOCOUNT ON;
--- Cast is needed to corretly inform pyodbc of output type is NVARCHAR(MAX)
--- Needed if generated json is bigger then 4000 bytes and thus pyodbc trucates it
--- https://stackoverflow.com/questions/49469301/pyodbc-truncates-the-response-of-a-sql-server-for-json-query
+-- Cast is needed to simplify JSON management on the client side:
+-- https://docs.microsoft.com/en-us/sql/relational-databases/json/use-for-json-output-in-sql-server-and-in-client-apps-sql-server
+-- as a single JSON result can be returned as chunked into several rows. By casting it into a NVARCHAR(MAX) it will always be
+-- returned as one row instead (but with a 2GB limit...which shouldn't be a problem.)
 SELECT CAST((
 	SELECT 
 		[CustomerID], 
