@@ -28,7 +28,7 @@ Taxonomies for products and languages: https://review.docs.microsoft.com/new-hop
 
 Thanks to native JSON support, creating a serverless REST API with Azure Functions, Azure SQL and Node is really a matter of a few lines of code. Take a look at `customer/index.js` to see how easy it is!
 
-Wondering what's the magic behind? Azure Functions takes care of running the NodeJS code, so all is needed is to get the incoming HTTP request, handle it, send the data as we receive it - a JSON - to Azure SQL and we're done. Thanks to the [native JSON support that Azure SQL provides](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-json-features) does all the heavy lifting so sending data back and forth to the database is as easy as sending a JSON message.
+Wondering what's the magic behind? Azure Functions takes care of running the NodeJS code, so all is needed is to get the incoming HTTP request, handle it, send the data as we receive it - a JSON - to Azure SQL and we're done. Thanks to the [native JSON support that Azure SQL provides](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-json-features), it does all the heavy lifting for as so sending data back and forth to the database is as easy as sending a JSON message.
 
 ## Install Sample Database
 
@@ -120,15 +120,24 @@ Debugging from Visual Studio Code is fully supported, thanks to the [Visual Stud
 
 ## Deploy to Azure
 
-TDB
+Now that your REST API solution is ready, it's time to deploy it on Azure so that anyone can take advantage of it. A script `azure-deploy.sh` that uses AZ CLI (so it needs to be executed from a Linux shell. If you don't have one on your machine you can use Azure Cloud Shell) is available within the repo
 
-## Connection Resiliency
+```bash
+export db_server="myserver.database.windows.net"
+export db_database="mydatabase"
 
-TDB
+./azure-deploy.sh
+```
 
-## Learn more
+It will care of everything for you:
 
-TDB
+- Creating a Resource Group (you can set the name you want by changing it directly in the .sh file)
+- Creating a Storage Account
+- Creating Azure Application Insights
+- Create an Azure Function app
+- Deploying repo code to Azure Function
+
+Enjoy!
 
 ## Contributing
 
