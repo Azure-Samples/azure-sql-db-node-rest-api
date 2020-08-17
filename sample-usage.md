@@ -27,11 +27,11 @@ curl -s -X PUT  http://localhost:7071/api/customer --header 'content-type: appli
 ## Update customer
 
 ```bash
-curl -s -X PATCH http://localhost:5000/customer/1050 --header 'content-type: application/json' --data '{"CustomerName": "Jane Dean", "PhoneNumber": "231-778-5678" }'
+curl -s -X PATCH http://localhost:7071/customer/1050 --header 'content-type: application/json' --data '{"CustomerName": "Jane Dean", "PhoneNumber": "231-778-5678" }'
 ```
 
 ## Delete a customer
 
 ```bash
-curl -s -X DELETE http://localhost:5000/customer/1050
+curl -s -X DELETE http://localhost:7071/customer/1050
 ```

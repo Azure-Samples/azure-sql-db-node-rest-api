@@ -14,7 +14,7 @@ description: "Creating a modern REST API with Python and Azure SQL, using Flask 
 urlFragment: "azure-sql-db-node-rest-api"
 ---
 
-# Creating a REST API with Azure Functions, Node and Azure SQL
+# Serverless REST API with Azure Functions, Node and Azure SQL
 
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
