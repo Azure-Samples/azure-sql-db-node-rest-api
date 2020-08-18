@@ -116,7 +116,7 @@ Check out more samples to test all implemented verbs here:
 
 ## Debug from Visual Studio Code
 
-Debugging from Visual Studio Code is fully supported, thanks to the [Visual Studio Code Azure Function extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions
+Debugging from Visual Studio Code is fully supported, thanks to the [Visual Studio Code Azure Function extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions)
 
 ## Deploy to Azure
 
