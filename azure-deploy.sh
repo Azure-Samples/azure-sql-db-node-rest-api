@@ -11,15 +11,28 @@ location="WestUS2"
 # Change this if you are using your own github repository
 gitSource="https://github.com/Azure-Samples/azure-sql-db-node-rest-api.git"
 
-# Make sure variables are sent in local.settings.json
+# Read values from local.settings.json
+export db_server=`cat local.settings.json | jq .Values.db_server -r`
 if [[ -z "${db_server:-}" ]]; then
-	echo "Please export Azure SQL server to use:";
-    echo "export db_server=\"your-database-name-here\".database.windows.net";
+	echo "Please make sure you have 'db_server' set in your local.settings.json file";
 	exit 1;
 fi
+
+export db_database=`cat local.settings.json | jq .Values.db_database -r`
 if [[ -z "${db_database:-}" ]]; then
-	echo "Please export Azure SQL database to use:";
-    echo "export db_database=\"your-database-name-here\"";
+	echo "Please make sure you have 'db_database' set in your local.settings.json file";
+	exit 1;
+fi
+
+export db_user=`cat local.settings.json | jq .Values.db_user -r`
+if [[ -z "${db_user:-}" ]]; then
+	echo "Please make sure you have 'db_user' set in your local.settings.json file";
+	exit 1;
+fi
+
+export db_password=`cat local.settings.json | jq .Values.db_password -r`
+if [[ -z "${db_password:-}" ]]; then
+	echo "Please make sure you have 'db_password' set in your local.settings.json file";
 	exit 1;
 fi
 
@@ -74,11 +87,11 @@ az functionapp config appsettings set \
 az functionapp config appsettings set \
     -g $resourceGroup \
     -n $appName \
-    --settings 'db_user=NodeFuncApp'     
+    --settings "db_user=$db_user"
 
 az functionapp config appsettings set \
     -g $resourceGroup \
     -n $appName \
-    --settings 'db_password=aN0ThErREALLY#$%TRONGpa44w0rd!'     
+    --settings "db_password=$db_password"
 
 echo "Done."
