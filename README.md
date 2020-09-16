@@ -120,12 +120,9 @@ Debugging from Visual Studio Code is fully supported, thanks to the [Visual Stud
 
 ## Deploy to Azure
 
-Now that your REST API solution is ready, it's time to deploy it on Azure so that anyone can take advantage of it. A script `azure-deploy.sh` that uses AZ CLI (so it needs to be executed from a Linux shell. If you don't have one on your machine you can use [Azure Cloud Shell](https://azure.microsoft.com/en-us/features/cloud-shell)) is available within the repo
+Now that your REST API solution is ready, it's time to deploy it on Azure so that anyone can take advantage of it. A script `azure-deploy.sh` that uses AZ CLI (so it needs to be executed from a Linux shell. If you don't have one on your machine you can use [Azure Cloud Shell](https://azure.microsoft.com/en-us/features/cloud-shell)) is available within the repo. Just make sure you fill the needed settings into the `local.settings.json` as mentioned before as the script will read the values from there.
 
 ```bash
-export db_server="myserver.database.windows.net"
-export db_database="mydatabase"
-
 ./azure-deploy.sh
 ```
 
