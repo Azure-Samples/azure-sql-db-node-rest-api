@@ -11,7 +11,7 @@ products:
 - vs-code
 - azure-sql-database
 - azure-functions
-description: "Creating a modern REST API with Python and Azure SQL, using Flask and Visual Studio Code"
+description: "Creating a modern REST API with Node and Azure SQL, Azure Functions and Visual Studio Code"
 urlFragment: "azure-sql-db-node-rest-api"
 ---
 
