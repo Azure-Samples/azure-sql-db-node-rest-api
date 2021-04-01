@@ -132,7 +132,7 @@ It will care of everything for you:
 - Creating a Resource Group (you can set the name you want by changing it directly in the .sh file)
 - Creating a Storage Account
 - Creating Azure Application Insights
-- Create an Azure Function app
+- Create an Azure Function App
 - Deploying repo code to Azure Function
 
 Enjoy!
