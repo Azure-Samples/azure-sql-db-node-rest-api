@@ -86,7 +86,7 @@ Http Functions:
         customer: [GET,PUT,PATCH,DELETE] http://localhost:7071/api/customer/{id:int?}
 ```
 
-Using a REST Client (like [Insomnia](https://insomnia.rest/), [Postman](https://www.getpostman.com/) or curl), you can now call your API, for example:
+Using a REST Client (such as [Visual Studio](https://learn.microsoft.com/aspnet/core/test/http-files), [Insomnia](https://insomnia.rest/), [Curl](https://curl.se/docs/httpscripting.html) or PowerShell's [Invoke-RestMethod](https://learn.microsoft.com/powershell/module/microsoft.powershell.utility/invoke-restmethod)), you can now call your API, for example:
 
 ```bash
 curl -X GET http://localhost:7071/customer/123
